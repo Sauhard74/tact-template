@@ -1,0 +1,40 @@
+;;
+;; Header files for TaskCompletion
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_verify_address
+slice __tact_verify_address(slice address) impure inline;
+
+;; __tact_load_address
+(slice, slice) __tact_load_address(slice cs) inline;
+
+;; __tact_store_address
+builder __tact_store_address(builder b, slice address) inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; $Task$_store
+builder $Task$_store(builder build_0, (slice, int, int) v) inline;
+
+;; $Task$_load
+(slice, ((slice, int, int))) $Task$_load(slice sc_0) inline;
+
+;; $TaskCompletion$_store
+builder $TaskCompletion$_store(builder build_0, ((slice, int, int), slice) v) inline;
+
+;; $TaskCompletion$_load
+(slice, (((slice, int, int), slice))) $TaskCompletion$_load(slice sc_0) inline;
+
+;; $Task$_constructor_receiver_reward_isValidated
+((slice, int, int)) $Task$_constructor_receiver_reward_isValidated(slice $receiver, int $reward, int $isValidated) inline;
+
+;; $TaskCompletion$_contract_init
+((slice, int, int), slice) $TaskCompletion$_contract_init() impure inline_ref;
+
+;; $TaskCompletion$_contract_load
+((slice, int, int), slice) $TaskCompletion$_contract_load() impure inline_ref;
+
+;; $TaskCompletion$_contract_store
+() $TaskCompletion$_contract_store(((slice, int, int), slice) v) impure inline;

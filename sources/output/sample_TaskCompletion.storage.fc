@@ -1,0 +1,61 @@
+;;
+;; Type: Task
+;; TLB: _ receiver:address reward:int257 isValidated:bool = Task
+;;
+
+builder $Task$_store(builder build_0, (slice, int, int) v) inline {
+    var (v'receiver, v'reward, v'isValidated) = v;
+    build_0 = __tact_store_address(build_0, v'receiver);
+    build_0 = build_0.store_int(v'reward, 257);
+    build_0 = build_0.store_int(v'isValidated, 1);
+    return build_0;
+}
+
+(slice, ((slice, int, int))) $Task$_load(slice sc_0) inline {
+    var v'receiver = sc_0~__tact_load_address();
+    var v'reward = sc_0~load_int(257);
+    var v'isValidated = sc_0~load_int(1);
+    return (sc_0, (v'receiver, v'reward, v'isValidated));
+}
+
+((slice, int, int)) $Task$_constructor_receiver_reward_isValidated(slice $receiver, int $reward, int $isValidated) inline {
+    return ($receiver, $reward, $isValidated);
+}
+
+;;
+;; Type: TaskCompletion
+;;
+
+builder $TaskCompletion$_store(builder build_0, ((slice, int, int), slice) v) inline {
+    var ((v'task'receiver, v'task'reward, v'task'isValidated), v'deployer) = v;
+    build_0 = $Task$_store(build_0, (v'task'receiver, v'task'reward, v'task'isValidated));
+    build_0 = __tact_store_address(build_0, v'deployer);
+    return build_0;
+}
+
+(slice, (((slice, int, int), slice))) $TaskCompletion$_load(slice sc_0) inline {
+    var v'task = sc_0~$Task$_load();
+    var v'deployer = sc_0~__tact_load_address();
+    return (sc_0, (v'task, v'deployer));
+}
+
+((slice, int, int), slice) $TaskCompletion$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$TaskCompletion$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        return $TaskCompletion$_contract_init();
+    }
+}
+
+() $TaskCompletion$_contract_store(((slice, int, int), slice) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $TaskCompletion$_store(b, v);
+    set_data(b.end_cell());
+}
